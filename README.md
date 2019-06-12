@@ -20,9 +20,8 @@ Add it in your root build.gradle at the end of repositories:
   Step 2. Add the dependency
 
   dependencies {
-  
 	        implementation 'com.github.gyadministrator:GYBottomBar:1.0'
-	}
+	  }
   
   Maven方式:
 
@@ -37,7 +36,7 @@ Add it in your root build.gradle at the end of repositories:
 	
   Step 2. Add the dependency
   
-  <dependency>
+  	<dependency>
 	    <groupId>com.github.gyadministrator</groupId>
 	    <artifactId>GYBottomBar</artifactId>
 	    <version>1.0</version>
