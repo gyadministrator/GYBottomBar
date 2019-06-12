@@ -19,8 +19,8 @@ Add it in your root build.gradle at the end of repositories:
   
   Step 2. Add the dependency
 
+
   dependencies {
-	        
 		implementation 'com.github.gyadministrator:GYBottomBar:1.0'
 	  }
   
@@ -54,8 +54,8 @@ Add it in your root build.gradle at the end of repositories:
 	
   activity中使用
   
-  package com.android.gybottombar;
-
+  
+package com.android.gybottombar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
