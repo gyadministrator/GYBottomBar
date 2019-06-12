@@ -19,19 +19,24 @@ Add it in your root build.gradle at the end of repositories:
   Step 2. Add the dependency
 
   dependencies {
+
 	        implementation 'com.github.gyadministrator:GYBottomBar:1.0'
+
 	}
   
   Maven方式:
 
   ep 1. Add the JitPack repository to your build file
+
   <repositories>
 		<repository>
 		    <id>jitpack.io</id>
 		    <url>https://jitpack.io</url>
 		</repository>
 	</repositories>
+	
   Step 2. Add the dependency
+  
   <dependency>
 	    <groupId>com.github.gyadministrator</groupId>
 	    <artifactId>GYBottomBar</artifactId>
@@ -39,12 +44,16 @@ Add it in your root build.gradle at the end of repositories:
 	</dependency>
   
   Use in Activity, So Easy!!!
+  
   在xml中添加这个view
+  
   <com.android.bottombar.view.GYBottomBarView
         android:id="@+id/bottomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+	
   activity中使用
+  
   package com.android.gybottombar;
 
 import android.support.v7.app.AppCompatActivity;
