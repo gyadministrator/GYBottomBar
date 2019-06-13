@@ -1,11 +1,17 @@
 package com.android.gybottombar;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.android.bottombar.model.GYBarItem;
 import com.android.bottombar.view.GYBottomBarView;
+import com.android.gybottombar.fragment.TestFragment;
+import com.android.gybottombar.fragment.TestFragment1;
+import com.android.gybottombar.fragment.TestFragment2;
+import com.android.gybottombar.fragment.TestFragment3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +19,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements GYBottomBarView.IGYBottomBarChangeListener {
     private GYBottomBarView bottomView;
     private List<GYBarItem> barItems = new ArrayList<>();
+    List<Fragment> fragments = new ArrayList<>();
+    List<Integer> icons = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +29,29 @@ public class MainActivity extends AppCompatActivity implements GYBottomBarView.I
 
         bottomView = findViewById(R.id.bottomView);
         initBarItems();
-        try {
-            bottomView.setBarItems(barItems);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        bottomView.setBarItems(barItems);
+        bottomView.setPositionBadge(0, 6);
+        bottomView.setPositionBadge(1, 0);
+        bottomView.setPositionBadge(2, 100);
+        initFragment();
+        initIcons();
+        bottomView.setSelectIcon(icons);
+        bottomView.setFragments(getSupportFragmentManager(), fragments, R.id.fl_container);
         bottomView.setBarChangeListener(this);
+    }
+
+    private void initIcons() {
+        icons.add(R.drawable.more);
+        icons.add(R.drawable.more);
+        icons.add(R.drawable.more);
+        icons.add(R.drawable.more);
+    }
+
+    private void initFragment() {
+        fragments.add(TestFragment.newInstance());
+        fragments.add(TestFragment1.newInstance());
+        fragments.add(TestFragment2.newInstance());
+        fragments.add(TestFragment3.newInstance());
     }
 
     private void initBarItems() {
@@ -34,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements GYBottomBarView.I
         barItems.add(new GYBarItem("视频", R.mipmap.ic_launcher));
         barItems.add(new GYBarItem("资讯", R.mipmap.ic_launcher));
         barItems.add(new GYBarItem("我的", R.mipmap.ic_launcher));
-        barItems.add(new GYBarItem("音乐", R.mipmap.ic_launcher));
     }
 
     @Override

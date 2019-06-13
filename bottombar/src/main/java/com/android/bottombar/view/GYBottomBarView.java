@@ -2,18 +2,28 @@ package com.android.bottombar.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;;
+import android.widget.TextView;
 
 import com.android.bottombar.R;
 import com.android.bottombar.model.GYBarItem;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import q.rorbin.badgeview.QBadgeView;
+
+;
 
 /**
  * Description: GYBottomBar
@@ -26,36 +36,59 @@ public class GYBottomBarView extends LinearLayout {
     private List<TextView> barViews = new ArrayList<>();//底部菜单布局
     private List<GYBarItem> barItems = new ArrayList<>();//底部菜单项
     private IGYBottomBarChangeListener barChangeListener;
+    private Context mContext;
+    private QBadgeView badgeView;
+    private int container;//存放fragment的容器
+    private List<Fragment> fragments = new ArrayList<>();//存放fragment的集合
+    private FragmentManager fragmentManager;
+    private int normalColor;
+    private int selectColor;
+    private int badgePosition;
+    private List<Integer> icons = new ArrayList<>();
 
     public void setBarChangeListener(IGYBottomBarChangeListener barChangeListener) {
         this.barChangeListener = barChangeListener;
     }
 
-    public GYBottomBarView(Context context) throws Exception {
+    public GYBottomBarView(Context context) {
         this(context, null);
     }
 
-    public GYBottomBarView(Context context, AttributeSet attrs) throws Exception {
+    public GYBottomBarView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public GYBottomBarView(Context context, AttributeSet attrs, int defStyleAttr) throws Exception {
+    public GYBottomBarView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.GYBottomBarView);
+        normalColor = typedArray.getColor(R.styleable.GYBottomBarView_normalTextColor, Color.BLACK);
+        selectColor = typedArray.getColor(R.styleable.GYBottomBarView_selectTextColor, Color.RED);
+        typedArray.recycle();
         init(context);
     }
 
-    public void setBarItems(List<GYBarItem> barItems) throws Exception {
+    public void setBarItems(List<GYBarItem> barItems) {
         this.barItems = barItems;
         init(this.getContext());
     }
 
     @SuppressLint("ResourceAsColor")
-    private void init(Context context) throws Exception {
+    private void init(Context context) {
+        mContext = context;
+        badgeView = new QBadgeView(mContext);
         if (barItems.size() != 0 && barItems.size() < barNumMin) {
-            throw new Exception("底部栏菜单个数太少");
+            try {
+                throw new Exception("底部栏菜单个数太少");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if (barItems.size() != 0 && barItems.size() > barNumMax) {
-            throw new Exception("底部栏菜单个数太多");
+            try {
+                throw new Exception("底部栏菜单个数太多");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         for (int i = 0; i < barItems.size(); i++) {
             GYBarItem barItem = barItems.get(i);
@@ -66,9 +99,10 @@ public class GYBottomBarView extends LinearLayout {
             textView.setCompoundDrawablePadding(10);
             textView.setTextSize(15);
             textView.setGravity(Gravity.CENTER);
+            textView.setTextColor(normalColor);
             barViews.add(textView);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
             this.addView(textView, i, params);
             this.setBackgroundResource(R.color.bottomColor);
             this.setPadding(6, 6, 6, 6);
@@ -76,14 +110,126 @@ public class GYBottomBarView extends LinearLayout {
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (badgePosition == position) {
+                        badgeView.hide(true);
+                    }
+                    setColor(position);
+                    setIcon(position);
+                    switchFragment(position);
                     barChangeListener.onSelected(position);
                 }
             });
         }
     }
 
+    public void setSelectIcon(List<Integer> icons) {
+        if (icons.size() != barViews.size()) {
+            try {
+                throw new Exception("icon个数和菜单个数不一致");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.icons = icons;
+    }
+
+    private void setIcon(int position) {
+        for (int i = 0; i < barViews.size(); i++) {
+            GYBarItem barItem = barItems.get(i);
+            TextView textView = barViews.get(i);
+            if (i == position) {
+                Drawable drawable = getResources().getDrawable(icons.get(i));
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                textView.setCompoundDrawablePadding(10);
+            } else {
+                Drawable drawable = getResources().getDrawable(barItem.getIcon());
+                textView.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+                textView.setCompoundDrawablePadding(10);
+            }
+        }
+    }
+
+    private void setColor(int position) {
+        for (int i = 0; i < barViews.size(); i++) {
+            if (i == position) {
+                barViews.get(i).setTextColor(selectColor);
+            } else {
+                barViews.get(i).setTextColor(normalColor);
+            }
+        }
+    }
+
+    /**
+     * 切换fragment
+     *
+     * @param position 位置
+     */
+    private void switchFragment(int position) {
+        if (fragments != null) {
+            Fragment fragment = fragments.get(position);
+            fragmentManager.executePendingTransactions();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            List<Fragment> fragmentList = fragmentManager.getFragments();
+            if (fragmentList.contains(fragment)) {
+                fragmentTransaction.show(fragment);
+            } else {
+                fragmentTransaction.replace(container, fragment);
+            }
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    }
+
 
     public interface IGYBottomBarChangeListener {
         void onSelected(int position);
+    }
+
+    /**
+     * 设置底部栏某一个的角标
+     *
+     * @param position 位置
+     * @param num      数量
+     */
+    public void setPositionBadge(int position, int num) {
+        badgePosition = position;
+        if (position < 0 || num < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        TextView textView = barViews.get(position);
+        if (textView != null && num > 0) {
+            badgeView.bindTarget(textView);
+            badgeView.setBadgeNumber(num);
+            badgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
+            badgeView.setGravityOffset(20, -3, true);
+            badgeView.setExactMode(false);
+        }
+
+        if (textView != null && num == 0) {
+            badgeView.bindTarget(textView);
+            badgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
+            badgeView.setGravityOffset(20, -3, true);
+        }
+    }
+
+
+    public void setFragments(FragmentManager fragmentManager, List<Fragment> fragments, int container) {
+        if (fragments == null || fragments.size() == 0 || container == 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        this.fragments = fragments;
+        this.container = container;
+        this.fragmentManager = fragmentManager;
+
+        switchFragment(0);
+        setColor(0);
+        setIcon(0);
     }
 }

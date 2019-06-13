@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GYBottomBarView">
+        <attr name="normalTextColor" format="color" />
+        <attr name="selectTextColor" format="color" />
+    </declare-styleable>
+</resources>
