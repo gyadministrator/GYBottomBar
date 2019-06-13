@@ -9,6 +9,7 @@
 How to use?
 
 Gradle方式：
+
 Step 1. Add the JitPack repository to your build file
 
 Add it in your root build.gradle at the end of repositories:
@@ -32,7 +33,7 @@ Add it in your root build.gradle at the end of repositories:
   
   Maven方式:
 
-  ep 1. Add the JitPack repository to your build file
+  step 1. Add the JitPack repository to your build file
 
   <repositories>
 		<repository>
