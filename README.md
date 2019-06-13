@@ -1,6 +1,7 @@
 # GYBottomBar
 方便的底部栏
-先上图！！！！！：
+
+废话不多说，先上图！！！！！：
 
 ![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20190613102553.png)
 ![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20190613102037.png)
