@@ -135,4 +135,4 @@ public class MainActivity extends AppCompatActivity implements GYBottomBarView.I
 
 运行结果如下：
 
-![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190612162819.png)
+![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20190613102037.png)
