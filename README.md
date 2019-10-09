@@ -26,6 +26,7 @@ Gradle引入方式：
 
 第一步，添加到build文件中
 
+
   <repositories>
 
 	<repository>
@@ -34,11 +35,14 @@ Gradle引入方式：
 
 	    <url>https://jitpack.io</url>
 
-        </repository>
-        
+    </repository>
+
   </repositories>
 
+
+
 第二步，添加依赖
+
 
   <dependency>
 
@@ -49,6 +53,7 @@ Gradle引入方式：
 	  <version>1.2</version>
 
   </dependency>
+
   
 在activity使用，非常简单。
   
