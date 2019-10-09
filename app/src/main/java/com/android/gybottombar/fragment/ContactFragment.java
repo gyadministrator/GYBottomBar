@@ -11,24 +11,24 @@ import android.view.ViewGroup;
 
 import com.android.gybottombar.R;
 
-public class TestFragment1 extends Fragment {
+public class ContactFragment extends Fragment {
 
-    private TestFragment1ViewModel mViewModel;
+    private ContactFragmentViewModel mViewModel;
 
-    public static TestFragment1 newInstance() {
-        return new TestFragment1();
+    public static ContactFragment newInstance() {
+        return new ContactFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.test_fragment1_fragment, container, false);
+        return inflater.inflate(R.layout.contact_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TestFragment1ViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ContactFragmentViewModel.class);
         // TODO: Use the ViewModel
     }
 

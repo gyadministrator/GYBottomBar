@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.TestFragment">
+    tools:context=".fragment.MyFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="test" />
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="我"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
 
 </FrameLayout>

@@ -3,8 +3,8 @@
 
 废话不多说，先上图！！！！！：
 
-![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20190613102553.png)
-![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20190613102037.png)
+![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170427.png)
+![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170507.png)
 
 How to use?
 
@@ -66,74 +66,84 @@ Add it in your root build.gradle at the end of repositories:
         android:layout_height="wrap_content"
         app:normalTextColor="#CCCCCC" />
 
-  activity中使用
+ activity中使用
   
-  package com.android.gybottombar;
+ package com.android.gybottombar;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+ import android.widget.Toast;
 
-import com.android.bottombar.model.GYBarItem;
-import com.android.bottombar.view.GYBottomBarView;
-import com.android.gybottombar.fragment.TestFragment;
-import com.android.gybottombar.fragment.TestFragment1;
-import com.android.gybottombar.fragment.TestFragment2;
-import com.android.gybottombar.fragment.TestFragment3;
+ import com.android.bottombar.activity.GYBottomActivity;
+ import com.android.bottombar.model.GYBarItem;
+ import com.android.bottombar.view.GYBottomBarView;
+ import com.android.gybottombar.fragment.InfoFragment;
+ import com.android.gybottombar.fragment.ContactFragment;
+ import com.android.gybottombar.fragment.FindFragment;
+ import com.android.gybottombar.fragment.MyFragment;
 
-import java.util.ArrayList;
-import java.util.List;
+ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IGYBottomBarChangeListener {
+     private GYBottomBarView bottomView;
 
-public class MainActivity extends AppCompatActivity implements GYBottomBarView.IGYBottomBarChangeListener {
-    private GYBottomBarView bottomView;
-    private List<GYBarItem> barItems = new ArrayList<>();
-    List<Fragment> fragments = new ArrayList<>();
-    List<Integer> icons = new ArrayList<>();
+     @Override
+     public void onSelected(int position) {
+         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
+     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+     @Override
+     protected void initBarItems() {
+         barItems.add(new GYBarItem("微信", R.mipmap.home_normal));
+         barItems.add(new GYBarItem("通信录", R.mipmap.category_normal));
+         barItems.add(new GYBarItem("发现", R.mipmap.service_normal));
+         barItems.add(new GYBarItem("我", R.mipmap.mine_normal));
+     }
 
-        bottomView = findViewById(R.id.bottomView);
-        initBarItems();
-        bottomView.setBarItems(barItems);
-        bottomView.setPositionBadge(0, 6);
-        bottomView.setPositionBadge(1, 0);
-        bottomView.setPositionBadge(2, 100);
-        initFragment();
-        initIcons();
-        bottomView.setSelectIcon(icons);
-        bottomView.setFragments(getSupportFragmentManager(), fragments, R.id.fl_container);
-        bottomView.setBarChangeListener(this);
-    }
+     @Override
+     protected void initFragment() {
+         fragments.add(InfoFragment.newInstance());
+         fragments.add(ContactFragment.newInstance());
+         fragments.add(FindFragment.newInstance());
+         fragments.add(MyFragment.newInstance());
+     }
 
-    private void initIcons() {
-        icons.add(R.drawable.more);
-        icons.add(R.drawable.more);
-        icons.add(R.drawable.more);
-        icons.add(R.drawable.more);
-    }
+     @Override
+     protected void initSelectIcons() {
+         icons.add(R.mipmap.home_selected);
+         icons.add(R.mipmap.category_selected);
+         icons.add(R.mipmap.service_selected);
+         icons.add(R.mipmap.mine_selected);
+     }
 
-    private void initFragment() {
-        fragments.add(TestFragment.newInstance());
-        fragments.add(TestFragment1.newInstance());
-        fragments.add(TestFragment2.newInstance());
-        fragments.add(TestFragment3.newInstance());
-    }
+     @Override
+     protected int initContentView() {
+         return R.layout.activity_main;
+     }
 
-    private void initBarItems() {
-        barItems.add(new GYBarItem("首页", R.mipmap.ic_launcher));
-        barItems.add(new GYBarItem("视频", R.mipmap.ic_launcher));
-        barItems.add(new GYBarItem("资讯", R.mipmap.ic_launcher));
-        barItems.add(new GYBarItem("我的", R.mipmap.ic_launcher));
-    }
+     @Override
+     protected GYBottomBarView getBottomBarView() {
+         return bottomView;
+     }
 
-    @Override
-    public void onSelected(int position) {
-        Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
-    }
-}
+     @Override
+     protected int initContainerId() {
+         return R.id.fl_container;
+     }
+
+     @Override
+     protected GYBottomBarView.IGYBottomBarChangeListener initChangeListener() {
+         return this;
+     }
+
+     @Override
+     protected void initView() {
+         bottomView = findViewById(R.id.bottomView);
+     }
+
+     @Override
+     protected void initPositionBadge() {
+         super.initPositionBadge();
+         bottomView.setPositionBadge(0, 6);
+         bottomView.setPositionBadge(1, 0);
+         bottomView.setPositionBadge(2, 100);
+     }
+ }
+
 
