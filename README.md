@@ -6,53 +6,44 @@
 ![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170427.png)
 ![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170507.png)
 
-How to use?
+怎样使用?
 
-Gradle方式：
+Gradle引入方式：
 
-Step 1. Add the JitPack repository to your build file
-
-Add it in your root build.gradle at the end of repositories:
-
-	allprojects {
+    allprojects {
 		repositories {
-			...
 			maven {
 				url 'https://jitpack.io'
 			}
 		}
 	}
-  
-  Step 2. Add the dependency
-
 
   dependencies {
-		
-		implementation 'com.github.gyadministrator:GYBottomBar:1.1'
-	  }
+		implementation 'com.github.gyadministrator:GYBottomBar:1.2'
+	}
   
-  Maven方式:
+  Maven引入方式:
 
-  step 1. Add the JitPack repository to your build file
+第一步，添加到build文件中
 
   <repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-	
-  Step 2. Add the dependency
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+        </repository>
+  </repositories>
+
+第二步，添加依赖
+
+  <dependency>
+	  <groupId>com.github.gyadministrator</groupId>
+	  <artifactId>GYBottomBar</artifactId>
+	  <version>1.2</version>
+  </dependency>
   
-  	<dependency>
-	    <groupId>com.github.gyadministrator</groupId>
-	    <artifactId>GYBottomBar</artifactId>
-	    <version>1.0</version>
-	</dependency>
+在activity使用，非常简单。
   
-  Use in Activity, So Easy!!!
-  
-  在xml中添加这个view
+在xml中添加这个view。
   
  <FrameLayout
         android:id="@+id/fl_container"
