@@ -51,7 +51,7 @@ Gradle引入方式：
 	  <artifactId>GYBottomBar</artifactId>
 
 	  <version>1.2</version>
-	  
+
   </dependency>
 
 
