@@ -28,6 +28,7 @@ Gradle引入方式：
 
 
   <repositories>
+
 	<repository>
 
 	    <id>jitpack.io</id>
@@ -35,6 +36,7 @@ Gradle引入方式：
 	    <url>https://jitpack.io</url>
 
     </repository>
+
   </repositories>
 
 
@@ -43,11 +45,13 @@ Gradle引入方式：
 
 
   <dependency>
+
 	  <groupId>com.github.gyadministrator</groupId>
 
 	  <artifactId>GYBottomBar</artifactId>
 
 	  <version>1.2</version>
+	  
   </dependency>
 
 
