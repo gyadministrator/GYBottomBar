@@ -27,18 +27,27 @@ Gradle引入方式：
 第一步，添加到build文件中
 
   <repositories>
+
 	<repository>
+
 	    <id>jitpack.io</id>
+
 	    <url>https://jitpack.io</url>
+
         </repository>
+        
   </repositories>
 
 第二步，添加依赖
 
   <dependency>
+
 	  <groupId>com.github.gyadministrator</groupId>
+
 	  <artifactId>GYBottomBar</artifactId>
+
 	  <version>1.2</version>
+
   </dependency>
   
 在activity使用，非常简单。
