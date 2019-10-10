@@ -3,8 +3,8 @@
 
 废话不多说，先上图！！！！！：
 
-![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170427.png)
-![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191009170507.png)
+![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191010092358.png)
+![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191010092419.png)
 
 怎样使用?
 
@@ -148,9 +148,13 @@ Gradle引入方式：
      protected void initPositionBadge() {
          super.initPositionBadge();
          bottomView.setPositionBadge(0, 6);
-         bottomView.setPositionBadge(1, 0);
+         bottomView.setPositionBadge(3, -1);
          bottomView.setPositionBadge(2, 100);
      }
  }
+
+
+ bottomView.setPositionBadge(3, -1);
+ num设置为小于0的时候，显示小圆点
 
 
