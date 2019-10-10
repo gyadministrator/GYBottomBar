@@ -37,14 +37,13 @@ public class GYBottomBarView extends LinearLayout {
     private List<GYBarItem> barItems = new ArrayList<>();//底部菜单项
     private IGYBottomBarChangeListener barChangeListener;
     private Context mContext;
-    private QBadgeView badgeView;
     private int container;//存放fragment的容器
     private List<Fragment> fragments = new ArrayList<>();//存放fragment的集合
     private FragmentManager fragmentManager;
     private int normalColor;
     private int selectColor;
-    private int badgePosition;
     private List<Integer> icons = new ArrayList<>();
+    private List<QBadgeView> qBadgeViews = new ArrayList<>();
 
     public void setBarChangeListener(IGYBottomBarChangeListener barChangeListener) {
         this.barChangeListener = barChangeListener;
@@ -75,7 +74,6 @@ public class GYBottomBarView extends LinearLayout {
     @SuppressLint("ResourceAsColor")
     private void init(Context context) {
         mContext = context;
-        badgeView = new QBadgeView(mContext);
         if (barItems.size() != 0 && barItems.size() < barNumMin) {
             try {
                 throw new Exception("底部栏菜单个数太少");
@@ -90,6 +88,7 @@ public class GYBottomBarView extends LinearLayout {
                 e.printStackTrace();
             }
         }
+        initQBView();
         for (int i = 0; i < barItems.size(); i++) {
             GYBarItem barItem = barItems.get(i);
             TextView textView = new TextView(context);
@@ -110,15 +109,20 @@ public class GYBottomBarView extends LinearLayout {
             textView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (badgePosition == position) {
-                        badgeView.hide(true);
-                    }
+                    QBadgeView badgeView = qBadgeViews.get(position);
+                    badgeView.hide(true);
                     setColor(position);
                     setIcon(position);
                     switchFragment(position);
                     barChangeListener.onSelected(position);
                 }
             });
+        }
+    }
+
+    private void initQBView() {
+        for (int i = 0; i < barItems.size(); i++) {
+            qBadgeViews.add(new QBadgeView(mContext));
         }
     }
 
@@ -191,8 +195,7 @@ public class GYBottomBarView extends LinearLayout {
      * @param num      数量
      */
     public void setPositionBadge(int position, int num) {
-        badgePosition = position;
-        if (position < 0 || num < 0) {
+        if (position < 0) {
             try {
                 throw new Exception("参数不合法");
             } catch (Exception e) {
@@ -200,18 +203,19 @@ public class GYBottomBarView extends LinearLayout {
             }
         }
         TextView textView = barViews.get(position);
-        if (textView != null && num > 0) {
-            badgeView.bindTarget(textView);
-            badgeView.setBadgeNumber(num);
-            badgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
-            badgeView.setGravityOffset(20, -3, true);
-            badgeView.setExactMode(false);
-        }
-
-        if (textView != null && num == 0) {
-            badgeView.bindTarget(textView);
-            badgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
-            badgeView.setGravityOffset(20, -3, true);
+        QBadgeView qBadgeView = qBadgeViews.get(position);
+        if (textView != null) {
+            qBadgeView.bindTarget(textView);
+            qBadgeView.setBadgeNumber(num);
+            qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
+            if (num < 0) {
+                qBadgeView.setGravityOffset(45, 1, true);
+            } else if (num > 99) {
+                qBadgeView.setGravityOffset(25, -3, true);
+            } else {
+                qBadgeView.setGravityOffset(35, -3, true);
+            }
+            qBadgeView.setExactMode(false);
         }
     }
 

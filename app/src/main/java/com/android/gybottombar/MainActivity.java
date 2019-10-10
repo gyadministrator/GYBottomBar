@@ -71,7 +71,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     protected void initPositionBadge() {
         super.initPositionBadge();
         bottomView.setPositionBadge(0, 6);
-        bottomView.setPositionBadge(1, 0);
+        bottomView.setPositionBadge(3, -1);
         bottomView.setPositionBadge(2, 100);
     }
 }
