@@ -71,6 +71,8 @@ Gradle引入方式：
         android:layout_height="wrap_content"
         app:normalTextColor="#CCCCCC" />
 
+ ![image](https://github.com/gyadministrator/GYBottomBar/blob/master/images/20191010084610.png)
+
  activity中使用
   
  package com.android.gybottombar;
