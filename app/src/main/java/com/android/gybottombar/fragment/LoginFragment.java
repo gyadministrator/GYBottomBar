@@ -1,6 +1,8 @@
 package com.android.gybottombar.fragment;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.gybottombar.MainActivity;
@@ -18,36 +22,45 @@ import com.android.gybottombar.utils.UserManager;
 
 import java.util.Objects;
 
-public class InfoFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private InfoViewModel mViewModel;
+    private LoginViewModel mViewModel;
     private TextView btn_login;
+    private ImageView iv_close;
 
-    public static InfoFragment newInstance() {
-        return new InfoFragment();
+    public static LoginFragment newInstance() {
+        return new LoginFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.info_fragment, container, false);
+        View view = inflater.inflate(R.layout.login_fragment, container, false);
         btn_login = view.findViewById(R.id.btn_login);
+        iv_close = view.findViewById(R.id.iv_close);
         btn_login.setOnClickListener(this);
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String isShow = bundle.getString("isShow");
+            if ("1".equals(isShow)) {
+                iv_close.setVisibility(View.GONE);
+            }
+        }
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(InfoViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         // TODO: Use the ViewModel
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-        if (!UserManager.isIsLogin()) {
-            ((MainActivity) Objects.requireNonNull(getActivity())).goLogin();
-        }
+        ((MainActivity) Objects.requireNonNull(getActivity())).changeFragment();
     }
 }

@@ -71,6 +71,17 @@ public class GYBottomBarView extends LinearLayout {
         init(this.getContext());
     }
 
+    public void updateFragment(int position) {
+        if (position>fragments.size()-1){
+            try {
+                throw new Exception("position大于fragments的数量");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        switchFragment(position);
+    }
+
     @SuppressLint("ResourceAsColor")
     private void init(Context context) {
         mContext = context;
