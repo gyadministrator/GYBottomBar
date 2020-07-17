@@ -1,5 +1,5 @@
 # GYBottomBar
-方便的底部栏
+方便的底部栏,已经迁移到AndroidX
 
 废话不多说，先上图！！！！！：
 
@@ -8,15 +8,22 @@
 
 怎样使用?
 
-Gradle引入方式：
+工程的Gradle引入方式：
+
+    repositories {
+            google()
+            jcenter()
+            mavenCentral()
+        }
 
     allprojects {
-		repositories {
-			maven {
-				url 'https://jitpack.io'
-			}
-		}
-	}
+        repositories {
+            google()
+            jcenter()
+            maven { url 'https://jitpack.io' }
+            mavenCentral()
+        }
+    }
 
   dependencies {
 		implementation 'com.github.gyadministrator:GYBottomBar:1.2'
