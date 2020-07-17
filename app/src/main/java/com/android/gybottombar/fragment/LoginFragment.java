@@ -1,24 +1,20 @@
 package com.android.gybottombar.fragment;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
-import android.media.Image;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.gybottombar.MainActivity;
 import com.android.gybottombar.R;
-import com.android.gybottombar.utils.UserManager;
 
 import java.util.Objects;
 

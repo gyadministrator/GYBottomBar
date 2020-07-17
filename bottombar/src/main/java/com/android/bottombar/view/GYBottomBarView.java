@@ -4,14 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,8 +23,6 @@ import java.util.List;
 
 import q.rorbin.badgeview.QBadgeView;
 
-;
-
 /**
  * Description: GYBottomBar
  * Created by gy(1984629668@qq.com)
@@ -32,8 +30,8 @@ import q.rorbin.badgeview.QBadgeView;
  */
 public class GYBottomBarView extends LinearLayout {
     private int barNumMin = 3;//底部栏菜单个数最小值
-    private int barNumMax = 5;//底部栏菜单个数最大值
-    private List<TextView> barViews = new ArrayList<>();//底部菜单布局
+    private int barNumMax = 6;//底部栏菜单个数最大值
+    private List<View> barViews = new ArrayList<>();//底部菜单布局
     private List<GYBarItem> barItems = new ArrayList<>();//底部菜单项
     private IGYBottomBarChangeListener barChangeListener;
     private Context mContext;
@@ -71,8 +69,36 @@ public class GYBottomBarView extends LinearLayout {
         init(this.getContext());
     }
 
+    public View getBottomViewPositionImageView(int position) {
+        if (barViews != null && barViews.size() > 0) {
+            if (position > barViews.size() - 1) {
+                try {
+                    throw new Exception("position大于barViews的数量");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return barViews.get(position).findViewById(R.id.iv_icon);
+        }
+        return null;
+    }
+
+    public View getBottomViewPositionTextView(int position) {
+        if (barViews != null && barViews.size() > 0) {
+            if (position > barViews.size() - 1) {
+                try {
+                    throw new Exception("position大于barViews的数量");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return barViews.get(position).findViewById(R.id.tv_txt);
+        }
+        return null;
+    }
+
     public void updateFragment(int position) {
-        if (position>fragments.size()-1){
+        if (position > fragments.size() - 1) {
             try {
                 throw new Exception("position大于fragments的数量");
             } catch (Exception e) {
@@ -102,22 +128,21 @@ public class GYBottomBarView extends LinearLayout {
         initQBView();
         for (int i = 0; i < barItems.size(); i++) {
             GYBarItem barItem = barItems.get(i);
-            TextView textView = new TextView(context);
-            textView.setText(barItem.getTitle());
-            Drawable drawable = getResources().getDrawable(barItem.getIcon());
-            textView.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-            textView.setCompoundDrawablePadding(10);
-            textView.setTextSize(15);
-            textView.setGravity(Gravity.CENTER);
-            textView.setTextColor(normalColor);
-            barViews.add(textView);
+            @SuppressLint("InflateParams") View viewItem = LayoutInflater.from(context).inflate(R.layout.bottom_item, null);
+            TextView tvTxt = viewItem.findViewById(R.id.tv_txt);
+            tvTxt.setText(barItem.getTitle());
+            tvTxt.setGravity(Gravity.CENTER);
+            tvTxt.setTextColor(normalColor);
+            ImageView ivIcon = viewItem.findViewById(R.id.iv_icon);
+            ivIcon.setImageResource(barItem.getIcon());
+            barViews.add(viewItem);
 
             final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            this.addView(textView, i, params);
+            this.addView(viewItem, i, params);
             this.setBackgroundResource(R.color.bottomColor);
             this.setPadding(6, 6, 6, 6);
             final int position = i;
-            textView.setOnClickListener(new OnClickListener() {
+            viewItem.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     QBadgeView badgeView = qBadgeViews.get(position);
@@ -151,15 +176,12 @@ public class GYBottomBarView extends LinearLayout {
     private void setIcon(int position) {
         for (int i = 0; i < barViews.size(); i++) {
             GYBarItem barItem = barItems.get(i);
-            TextView textView = barViews.get(i);
+            View view = barViews.get(i);
+            ImageView ivIcon = view.findViewById(R.id.iv_icon);
             if (i == position) {
-                Drawable drawable = getResources().getDrawable(icons.get(i));
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                textView.setCompoundDrawablePadding(10);
+                ivIcon.setImageResource(icons.get(i));
             } else {
-                Drawable drawable = getResources().getDrawable(barItem.getIcon());
-                textView.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
-                textView.setCompoundDrawablePadding(10);
+                ivIcon.setImageResource(barItem.getIcon());
             }
         }
     }
@@ -167,9 +189,9 @@ public class GYBottomBarView extends LinearLayout {
     private void setColor(int position) {
         for (int i = 0; i < barViews.size(); i++) {
             if (i == position) {
-                barViews.get(i).setTextColor(selectColor);
+                ((TextView) barViews.get(i).findViewById(R.id.tv_txt)).setTextColor(selectColor);
             } else {
-                barViews.get(i).setTextColor(normalColor);
+                ((TextView) barViews.get(i).findViewById(R.id.tv_txt)).setTextColor(normalColor);
             }
         }
     }
@@ -213,10 +235,10 @@ public class GYBottomBarView extends LinearLayout {
                 e.printStackTrace();
             }
         }
-        TextView textView = barViews.get(position);
+        View view = barViews.get(position);
         QBadgeView qBadgeView = qBadgeViews.get(position);
-        if (textView != null) {
-            qBadgeView.bindTarget(textView);
+        if (view != null) {
+            qBadgeView.bindTarget(view);
             qBadgeView.setBadgeNumber(num);
             qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
             if (num < 0) {
