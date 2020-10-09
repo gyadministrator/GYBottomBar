@@ -28,7 +28,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     public void onSelected(int position) {
         mPosition = position;
         if (position==2){
-            gyBottomBarView.hidePositionBadgeViewWithAnimate(position);
+            gyBottomBarView.hideBadge(position);
         }
         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
     }
@@ -67,7 +67,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                gyBottomBarView.setPositionCenterBadge(0, 2);
+                gyBottomBarView.setBadge(0, 2);
             }
         }, 2000);
     }
@@ -100,12 +100,10 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     protected void initPositionBadge() {
         super.initPositionBadge();
-        /*bottomView.setPositionBadge(0, 6);
-        bottomView.setPositionBadge(3, -1);
-        bottomView.setPositionBadge(2, 100);*/
-        bottomView.setPositionCenterBadge(0, 6);
-        bottomView.setPositionCenterBadge(3, -1);
-        bottomView.setPositionCenterBadge(2, 100);
+       bottomView.setBadge(0,6);
+       bottomView.setBadge(2,8);
+       bottomView.setBadge(3,100);
+       bottomView.setBadge(1,-1);
     }
 
     public void goLogin() {

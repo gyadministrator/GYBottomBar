@@ -23,8 +23,6 @@ import com.android.bottombar.model.GYBarItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import q.rorbin.badgeview.QBadgeView;
-
 /**
  * Description: GYBottomBar
  * Created by gy(1984629668@qq.com)
@@ -43,7 +41,7 @@ public class GYBottomBarView extends LinearLayout {
     private int normalColor;
     private int selectColor;
     private List<Integer> icons = new ArrayList<>();
-    private List<QBadgeView> qBadgeViews = new ArrayList<>();
+    private List<BadgeView> qBadgeViews = new ArrayList<>();
 
     public void setBarChangeListener(IGYBottomBarChangeListener barChangeListener) {
         this.barChangeListener = barChangeListener;
@@ -156,33 +154,10 @@ public class GYBottomBarView extends LinearLayout {
         }
     }
 
-    public void hidePositionBadgeView(int position) {
-        if (position > qBadgeViews.size() - 1) {
-            try {
-                throw new Exception("position大于了菜单个数");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        QBadgeView badgeView = qBadgeViews.get(position);
-        badgeView.hide(false);
-    }
-
-    public void hidePositionBadgeViewWithAnimate(int position) {
-        if (position > qBadgeViews.size() - 1) {
-            try {
-                throw new Exception("position大于了菜单个数");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        QBadgeView badgeView = qBadgeViews.get(position);
-        badgeView.hide(true);
-    }
 
     private void initQBView() {
         for (int i = 0; i < barItems.size(); i++) {
-            qBadgeViews.add(new QBadgeView(mContext));
+            qBadgeViews.add(new BadgeView(mContext));
         }
     }
 
@@ -251,8 +226,8 @@ public class GYBottomBarView extends LinearLayout {
      * @param position 位置
      * @param num      数量
      */
-    public void setPositionBadge(int position, int num) {
-        hidePositionBadgeView(position);
+    public void setBadge(int position, int num) {
+        hideBadge(position);
         if (position < 0) {
             try {
                 throw new Exception("参数不合法");
@@ -260,31 +235,13 @@ public class GYBottomBarView extends LinearLayout {
                 e.printStackTrace();
             }
         }
-        View view = barViews.get(position);
-        QBadgeView qBadgeView = qBadgeViews.get(position);
-        if (view != null) {
-            qBadgeView.bindTarget(view);
-            qBadgeView.setBadgeNumber(num);
-            qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
-            if (num < 0) {
-                qBadgeView.setGravityOffset(45, 1, true);
-            } else if (num > 99) {
-                qBadgeView.setGravityOffset(25, -3, true);
-            } else {
-                qBadgeView.setGravityOffset(35, -3, true);
-            }
-            qBadgeView.setExactMode(false);
-        }
+        View bottomViewPositionImageView = getBottomViewPositionImageView(position);
+        BadgeView badgeView = qBadgeViews.get(position);
+        badgeView.setTargetView(bottomViewPositionImageView);
+        badgeView.setBadgeCount(num);
     }
 
-    /**
-     * 设置底部栏某一个的角标
-     *
-     * @param position 位置
-     * @param num      数量
-     */
-    public QBadgeView setCustomPositionBadge(int position, int num) {
-        hidePositionBadgeView(position);
+    public void hideBadge(int position) {
         if (position < 0) {
             try {
                 throw new Exception("参数不合法");
@@ -292,39 +249,10 @@ public class GYBottomBarView extends LinearLayout {
                 e.printStackTrace();
             }
         }
-        View view = barViews.get(position);
-        QBadgeView qBadgeView = qBadgeViews.get(position);
-        if (view != null) {
-            qBadgeView.bindTarget(view);
-            qBadgeView.setBadgeNumber(num);
-            qBadgeView.setExactMode(false);
-        }
-        return qBadgeView;
-    }
-
-    /**
-     * 设置底部栏某一个的角标
-     *
-     * @param position 位置
-     * @param num      数量
-     */
-    public void setPositionCenterBadge(int position, int num) {
-        hidePositionBadgeView(position);
-        if (position < 0) {
-            try {
-                throw new Exception("参数不合法");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        View view = barViews.get(position);
-        QBadgeView qBadgeView = qBadgeViews.get(position);
-        if (view != null) {
-            qBadgeView.bindTarget(view);
-            qBadgeView.setBadgeNumber(num);
-            qBadgeView.setBadgeGravity(Gravity.CENTER | Gravity.TOP);
-            qBadgeView.setExactMode(false);
-        }
+        View bottomViewPositionImageView = getBottomViewPositionImageView(position);
+        BadgeView badgeView = qBadgeViews.get(position);
+        badgeView.setTargetView(bottomViewPositionImageView);
+        badgeView.setBadgeCount(0);
     }
 
 
