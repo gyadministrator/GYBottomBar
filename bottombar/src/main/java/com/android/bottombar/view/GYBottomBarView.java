@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -145,8 +147,6 @@ public class GYBottomBarView extends LinearLayout {
             viewItem.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    QBadgeView badgeView = qBadgeViews.get(position);
-                    badgeView.hide(true);
                     setColor(position);
                     setIcon(position);
                     switchFragment(position);
@@ -154,6 +154,30 @@ public class GYBottomBarView extends LinearLayout {
                 }
             });
         }
+    }
+
+    public void hidePositionBadgeView(int position) {
+        if (position > qBadgeViews.size() - 1) {
+            try {
+                throw new Exception("position大于了菜单个数");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        QBadgeView badgeView = qBadgeViews.get(position);
+        badgeView.hide(false);
+    }
+
+    public void hidePositionBadgeViewWithAnimate(int position) {
+        if (position > qBadgeViews.size() - 1) {
+            try {
+                throw new Exception("position大于了菜单个数");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        QBadgeView badgeView = qBadgeViews.get(position);
+        badgeView.hide(true);
     }
 
     private void initQBView() {
@@ -228,6 +252,7 @@ public class GYBottomBarView extends LinearLayout {
      * @param num      数量
      */
     public void setPositionBadge(int position, int num) {
+        hidePositionBadgeView(position);
         if (position < 0) {
             try {
                 throw new Exception("参数不合法");
@@ -248,6 +273,56 @@ public class GYBottomBarView extends LinearLayout {
             } else {
                 qBadgeView.setGravityOffset(35, -3, true);
             }
+            qBadgeView.setExactMode(false);
+        }
+    }
+
+    /**
+     * 设置底部栏某一个的角标
+     *
+     * @param position 位置
+     * @param num      数量
+     */
+    public QBadgeView setCustomPositionBadge(int position, int num) {
+        hidePositionBadgeView(position);
+        if (position < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        View view = barViews.get(position);
+        QBadgeView qBadgeView = qBadgeViews.get(position);
+        if (view != null) {
+            qBadgeView.bindTarget(view);
+            qBadgeView.setBadgeNumber(num);
+            qBadgeView.setExactMode(false);
+        }
+        return qBadgeView;
+    }
+
+    /**
+     * 设置底部栏某一个的角标
+     *
+     * @param position 位置
+     * @param num      数量
+     */
+    public void setPositionCenterBadge(int position, int num) {
+        hidePositionBadgeView(position);
+        if (position < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        View view = barViews.get(position);
+        QBadgeView qBadgeView = qBadgeViews.get(position);
+        if (view != null) {
+            qBadgeView.bindTarget(view);
+            qBadgeView.setBadgeNumber(num);
+            qBadgeView.setBadgeGravity(Gravity.CENTER | Gravity.TOP);
             qBadgeView.setExactMode(false);
         }
     }

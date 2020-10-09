@@ -1,8 +1,11 @@
 package com.android.gybottombar;
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +27,9 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     public void onSelected(int position) {
         mPosition = position;
+        if (position==2){
+            gyBottomBarView.hidePositionBadgeViewWithAnimate(position);
+        }
         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
     }
 
@@ -57,6 +63,13 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
         icons.add(R.mipmap.category_selected);
         icons.add(R.mipmap.service_selected);
         icons.add(R.mipmap.mine_selected);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                gyBottomBarView.setPositionCenterBadge(0, 2);
+            }
+        }, 2000);
     }
 
     @Override
@@ -87,9 +100,12 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     protected void initPositionBadge() {
         super.initPositionBadge();
-        bottomView.setPositionBadge(0, 6);
+        /*bottomView.setPositionBadge(0, 6);
         bottomView.setPositionBadge(3, -1);
-        bottomView.setPositionBadge(2, 100);
+        bottomView.setPositionBadge(2, 100);*/
+        bottomView.setPositionCenterBadge(0, 6);
+        bottomView.setPositionCenterBadge(3, -1);
+        bottomView.setPositionCenterBadge(2, 100);
     }
 
     public void goLogin() {
