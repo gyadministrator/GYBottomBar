@@ -27,7 +27,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     public void onSelected(int position) {
         mPosition = position;
-        if (position==2){
+        if (position == 2) {
             gyBottomBarView.hideBadge(position);
         }
         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
@@ -100,10 +100,10 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     protected void initPositionBadge() {
         super.initPositionBadge();
-       bottomView.setBadge(0,6);
-       bottomView.setBadge(2,8);
-       bottomView.setBadge(3,100);
-       bottomView.setBadge(1,-1);
+        bottomView.setBadgeWithBg(0, 6, "#FF0000");
+        bottomView.setBadgeWithBg(2, 8, "#FF0000");
+        bottomView.setBadgeWithBg(3, 100, "#FF0000");
+        bottomView.setBadgeWithBg(1, -1, "#FF0000");
     }
 
     public void goLogin() {

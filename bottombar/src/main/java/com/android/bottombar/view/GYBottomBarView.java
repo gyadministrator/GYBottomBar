@@ -241,6 +241,28 @@ public class GYBottomBarView extends LinearLayout {
         badgeView.setBadgeCount(num);
     }
 
+    /**
+     * 设置底部栏某一个的角标
+     *
+     * @param position 位置
+     * @param num      数量
+     */
+    public void setBadgeWithBg(int position, int num, String color) {
+        hideBadge(position);
+        if (position < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        View bottomViewPositionImageView = getBottomViewPositionImageView(position);
+        BadgeView badgeView = qBadgeViews.get(position);
+        badgeView.setTargetView(bottomViewPositionImageView);
+        badgeView.setBadgeCount(num);
+        badgeView.setBackground(9, Color.parseColor(color));
+    }
+
     public void hideBadge(int position) {
         if (position < 0) {
             try {

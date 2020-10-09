@@ -26,7 +26,7 @@
     }
 
   dependencies {
-		implementation 'com.github.gyadministrator:GYBottomBar:2.4'
+		implementation 'com.github.gyadministrator:GYBottomBar:3.0'
 	}
   
   Maven引入方式:
@@ -57,7 +57,7 @@
 
 	  <artifactId>GYBottomBar</artifactId>
 
-	  <version>2.4</version>
+	  <version>3.0</version>
 
   </dependency>
 
@@ -84,6 +84,13 @@
   
  package com.android.gybottombar;
 
+ import android.os.Bundle;
+
+ import androidx.fragment.app.Fragment;
+ import androidx.fragment.app.FragmentTransaction;
+
+ import android.os.Handler;
+ import android.util.Log;
  import android.widget.Toast;
 
  import com.android.bottombar.activity.GYBottomActivity;
@@ -92,13 +99,21 @@
  import com.android.gybottombar.fragment.InfoFragment;
  import com.android.gybottombar.fragment.ContactFragment;
  import com.android.gybottombar.fragment.FindFragment;
+ import com.android.gybottombar.fragment.LoginFragment;
  import com.android.gybottombar.fragment.MyFragment;
+ import com.android.gybottombar.utils.UserManager;
 
  public class MainActivity extends GYBottomActivity implements GYBottomBarView.IGYBottomBarChangeListener {
      private GYBottomBarView bottomView;
+     private static final String TAG = "MainActivity";
+     private static int mPosition = 0;
 
      @Override
      public void onSelected(int position) {
+         mPosition = position;
+         if (position == 2) {
+             gyBottomBarView.hideBadge(position);
+         }
          Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
      }
 
@@ -115,7 +130,15 @@
          fragments.add(InfoFragment.newInstance());
          fragments.add(ContactFragment.newInstance());
          fragments.add(FindFragment.newInstance());
-         fragments.add(MyFragment.newInstance());
+         if (UserManager.isIsLogin()) {
+             fragments.add(MyFragment.newInstance());
+         } else {
+             LoginFragment loginFragment = LoginFragment.newInstance();
+             Bundle bundle = new Bundle();
+             bundle.putString("isShow", "1");
+             loginFragment.setArguments(bundle);
+             fragments.add(loginFragment);
+         }
      }
 
      @Override
@@ -124,6 +147,13 @@
          icons.add(R.mipmap.category_selected);
          icons.add(R.mipmap.service_selected);
          icons.add(R.mipmap.mine_selected);
+
+         new Handler().postDelayed(new Runnable() {
+             @Override
+             public void run() {
+                 gyBottomBarView.setBadge(0, 2);
+             }
+         }, 2000);
      }
 
      @Override
@@ -154,14 +184,47 @@
      @Override
      protected void initPositionBadge() {
          super.initPositionBadge();
-         bottomView.setPositionBadge(0, 6);
-         bottomView.setPositionBadge(3, -1);
-         bottomView.setPositionBadge(2, 100);
+         bottomView.setBadgeWithBg(0, 6, "#FF0000");
+         bottomView.setBadgeWithBg(2, 8, "#FF0000");
+         bottomView.setBadgeWithBg(3, 100, "#FF0000");
+         bottomView.setBadgeWithBg(1, -1, "#FF0000");
+     }
+
+     public void goLogin() {
+         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+         fragmentTransaction.replace(R.id.fl_container, LoginFragment.newInstance());
+         //fragmentTransaction.addToBackStack(null);
+         fragmentTransaction.commitNow();
+     }
+
+     public void changeFragment() {
+         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fl_container);
+         Log.e(TAG, "changeFragment: " + mPosition);
+         Fragment fragment;
+         switch (mPosition) {
+             case 0:
+                 fragment = InfoFragment.newInstance();
+                 break;
+             case 1:
+                 fragment = ContactFragment.newInstance();
+                 break;
+             case 2:
+                 fragment = FindFragment.newInstance();
+                 break;
+             case 3:
+                 fragment = MyFragment.newInstance();
+                 break;
+             default:
+                 throw new IllegalStateException("Unexpected value: " + mPosition);
+         }
+         fragments.remove(currentFragment);
+         fragments.add(mPosition, fragment);
+         bottomView.updateFragment(mPosition);
+         mPosition = 0;
+         UserManager.setIsLogin(true);
      }
  }
 
-
- bottomView.setPositionBadge(3, -1);
  num设置为小于0的时候，显示小圆点
 
 
