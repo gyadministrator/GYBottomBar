@@ -17,5 +17,7 @@
         android:id="@+id/bottomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:normalTextColor="#CCCCCC" />
+        app:fixed="true"
+        app:normalTextColor="#CCCCCC"
+        app:selectTextColor="#FF0000" />
 </LinearLayout>

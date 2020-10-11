@@ -42,6 +42,7 @@ public class GYBottomBarView extends LinearLayout {
     private int selectColor;
     private List<Integer> icons = new ArrayList<>();
     private List<BadgeView> qBadgeViews = new ArrayList<>();
+    private boolean fixed = false;
 
     public void setBarChangeListener(IGYBottomBarChangeListener barChangeListener) {
         this.barChangeListener = barChangeListener;
@@ -60,6 +61,7 @@ public class GYBottomBarView extends LinearLayout {
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.GYBottomBarView);
         normalColor = typedArray.getColor(R.styleable.GYBottomBarView_normalTextColor, Color.BLACK);
         selectColor = typedArray.getColor(R.styleable.GYBottomBarView_selectTextColor, Color.RED);
+        fixed = typedArray.getBoolean(R.styleable.GYBottomBarView_fixed, false);
         typedArray.recycle();
         init(context);
     }
@@ -108,7 +110,7 @@ public class GYBottomBarView extends LinearLayout {
         switchFragment(position);
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint({"ResourceAsColor", "InflateParams"})
     private void init(Context context) {
         mContext = context;
         if (barItems.size() != 0 && barItems.size() < barNumMin) {
@@ -128,7 +130,12 @@ public class GYBottomBarView extends LinearLayout {
         initQBView();
         for (int i = 0; i < barItems.size(); i++) {
             GYBarItem barItem = barItems.get(i);
-            @SuppressLint("InflateParams") View viewItem = LayoutInflater.from(context).inflate(R.layout.bottom_item, null);
+            View viewItem;
+            if (fixed) {
+                viewItem = LayoutInflater.from(context).inflate(R.layout.bottom_fixed_item, null);
+            } else {
+                viewItem = LayoutInflater.from(context).inflate(R.layout.bottom_item, null);
+            }
             TextView tvTxt = viewItem.findViewById(R.id.tv_txt);
             tvTxt.setText(barItem.getTitle());
             tvTxt.setGravity(Gravity.CENTER);

@@ -3,5 +3,6 @@
     <declare-styleable name="GYBottomBarView">
         <attr name="normalTextColor" format="color" />
         <attr name="selectTextColor" format="color" />
+        <attr name="fixed" format="boolean" />
     </declare-styleable>
 </resources>
