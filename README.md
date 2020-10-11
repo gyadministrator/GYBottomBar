@@ -26,7 +26,7 @@
     }
 
   dependencies {
-		implementation 'com.github.gyadministrator:GYBottomBar:3.0'
+		implementation 'com.github.gyadministrator:GYBottomBar:3.1'
 	}
   
   Maven引入方式:
@@ -57,7 +57,7 @@
 
 	  <artifactId>GYBottomBar</artifactId>
 
-	  <version>3.0</version>
+	  <version>3.1</version>
 
   </dependency>
 
