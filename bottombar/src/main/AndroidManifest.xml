@@ -1,2 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.bottombar" />
+    package="com.android.bottombar" >
+
+    <application>
+        <activity android:name=".activity.GYBottomActivity" />
+    </application>
+</manifest>

@@ -40,9 +40,10 @@ public class GYBottomBarView extends LinearLayout {
     private FragmentManager fragmentManager;
     private int normalColor;
     private int selectColor;
+    private int bgColor;
     private List<Integer> icons = new ArrayList<>();
     private List<BadgeView> qBadgeViews = new ArrayList<>();
-    private boolean fixed = false;
+    private boolean fixed;
 
     public void setBarChangeListener(IGYBottomBarChangeListener barChangeListener) {
         this.barChangeListener = barChangeListener;
@@ -61,6 +62,7 @@ public class GYBottomBarView extends LinearLayout {
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.GYBottomBarView);
         normalColor = typedArray.getColor(R.styleable.GYBottomBarView_normalTextColor, Color.BLACK);
         selectColor = typedArray.getColor(R.styleable.GYBottomBarView_selectTextColor, Color.RED);
+        bgColor = typedArray.getColor(R.styleable.GYBottomBarView_bgColor, Color.WHITE);
         fixed = typedArray.getBoolean(R.styleable.GYBottomBarView_fixed, false);
         typedArray.recycle();
         init(context);
@@ -146,7 +148,7 @@ public class GYBottomBarView extends LinearLayout {
 
             final LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
             this.addView(viewItem, i, params);
-            this.setBackgroundResource(R.color.bottomColor);
+            this.setBackgroundColor(bgColor);
             this.setPadding(6, 6, 6, 6);
             final int position = i;
             viewItem.setOnClickListener(new OnClickListener() {
