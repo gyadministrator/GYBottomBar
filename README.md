@@ -26,7 +26,7 @@
     }
 
   dependencies {
-		implementation 'com.github.gyadministrator:GYBottomBar:3.2'
+		implementation 'com.github.gyadministrator:GYBottomBar:3.3'
 	}
   
   Maven引入方式:

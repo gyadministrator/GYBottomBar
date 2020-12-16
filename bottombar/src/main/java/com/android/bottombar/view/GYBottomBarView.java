@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.bottombar.R;
@@ -83,6 +84,20 @@ public class GYBottomBarView extends LinearLayout {
                 }
             }
             return barViews.get(position).findViewById(R.id.iv_icon);
+        }
+        return null;
+    }
+
+    public View getBottomViewPositionBubbleTextView(int position) {
+        if (barViews != null && barViews.size() > 0) {
+            if (position > barViews.size() - 1) {
+                try {
+                    throw new Exception("position大于barViews的数量");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return barViews.get(position).findViewById(R.id.tv_num);
         }
         return null;
     }
@@ -270,6 +285,61 @@ public class GYBottomBarView extends LinearLayout {
         badgeView.setTargetView(bottomViewPositionImageView);
         badgeView.setBadgeCount(num);
         badgeView.setBackground(9, Color.parseColor(color));
+    }
+
+    /**
+     * 设置底部栏某一个的角标
+     *
+     * @param position 位置
+     * @param num      数量
+     */
+    @SuppressLint("SetTextI18n")
+    public void setBubbleWithPosition(int position, int num) {
+        if (position < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        TextView bubbleTextView = (TextView) getBottomViewPositionBubbleTextView(position);
+        if (num < 0) {
+            bubbleTextView.setVisibility(VISIBLE);
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) bubbleTextView.getLayoutParams();
+            layoutParams.height = 10;
+            layoutParams.width = 10;
+            bubbleTextView.setLayoutParams(layoutParams);
+        }
+        if (num > 0) {
+            TextView textView = (TextView) getBottomViewPositionTextView(position);
+            LinearLayout.LayoutParams layoutParams = (LayoutParams) textView.getLayoutParams();
+            bubbleTextView.setVisibility(VISIBLE);
+            if (num > 99) {
+                bubbleTextView.setText("99+");
+                layoutParams.leftMargin = -12;
+            } else {
+                bubbleTextView.setText(String.valueOf(num));
+                layoutParams.leftMargin = -4;
+            }
+            textView.setLayoutParams(layoutParams);
+        }
+    }
+
+    public void hideBubblePosition(int position) {
+        if (position < 0) {
+            try {
+                throw new Exception("参数不合法");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        View bubbleTextView = getBottomViewPositionBubbleTextView(position);
+        bubbleTextView.setVisibility(GONE);
+
+        TextView textView = (TextView) getBottomViewPositionTextView(position);
+        LinearLayout.LayoutParams layoutParams = (LayoutParams) textView.getLayoutParams();
+        layoutParams.leftMargin = 0;
+        textView.setLayoutParams(layoutParams);
     }
 
     public void hideBadge(int position) {

@@ -28,7 +28,8 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     public void onSelected(int position) {
         mPosition = position;
         if (position == 2) {
-            gyBottomBarView.hideBadge(position);
+            //gyBottomBarView.hideBadge(position);
+            gyBottomBarView.hideBubblePosition(position);
         }
         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
     }
@@ -67,7 +68,8 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                gyBottomBarView.setBadge(0, 2);
+                //gyBottomBarView.setBadge(0, 2);
+                gyBottomBarView.setBubbleWithPosition(0, 2);
             }
         }, 2000);
     }
@@ -100,10 +102,14 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     protected void initPositionBadge() {
         super.initPositionBadge();
-        bottomView.setBadgeWithBg(0, 6, "#FF0000");
+        bottomView.setBubbleWithPosition(0, 6);
+        bottomView.setBubbleWithPosition(2, 8);
+        bottomView.setBubbleWithPosition(3, 100);
+        bottomView.setBubbleWithPosition(1, -1);
+        /*bottomView.setBadgeWithBg(0, 6, "#FF0000");
         bottomView.setBadgeWithBg(2, 8, "#FF0000");
         bottomView.setBadgeWithBg(3, 100, "#FF0000");
-        bottomView.setBadgeWithBg(1, -1, "#FF0000");
+        bottomView.setBadgeWithBg(1, -1, "#FF0000");*/
     }
 
     public void goLogin() {
