@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -306,8 +307,8 @@ public class GYBottomBarView extends LinearLayout {
         if (num < 0) {
             bubbleTextView.setVisibility(VISIBLE);
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) bubbleTextView.getLayoutParams();
-            layoutParams.height = 10;
-            layoutParams.width = 10;
+            layoutParams.height = ((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
+            layoutParams.width = ((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics()));
             bubbleTextView.setLayoutParams(layoutParams);
         }
         if (num > 0) {
@@ -316,10 +317,10 @@ public class GYBottomBarView extends LinearLayout {
             bubbleTextView.setVisibility(VISIBLE);
             if (num > 99) {
                 bubbleTextView.setText("99+");
-                layoutParams.leftMargin = -12;
+                layoutParams.leftMargin = -((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 12, getResources().getDisplayMetrics()));
             } else {
                 bubbleTextView.setText(String.valueOf(num));
-                layoutParams.leftMargin = -4;
+                layoutParams.leftMargin = -((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics()));
             }
             textView.setLayoutParams(layoutParams);
         }
