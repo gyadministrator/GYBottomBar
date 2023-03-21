@@ -4,6 +4,6 @@
         <attr name="normalTextColor" format="color" />
         <attr name="selectTextColor" format="color" />
         <attr name="fixed" format="boolean" />
-        <attr name="bgColor" format="color" />
+        <attr name="isPageRepeatLoading" format="boolean" />
     </declare-styleable>
 </resources>

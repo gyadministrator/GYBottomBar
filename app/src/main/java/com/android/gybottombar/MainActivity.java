@@ -1,20 +1,19 @@
 package com.android.gybottombar;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.bottombar.activity.GYBottomActivity;
 import com.android.bottombar.model.GYBarItem;
 import com.android.bottombar.view.GYBottomBarView;
-import com.android.gybottombar.fragment.InfoFragment;
 import com.android.gybottombar.fragment.ContactFragment;
 import com.android.gybottombar.fragment.FindFragment;
+import com.android.gybottombar.fragment.InfoFragment;
 import com.android.gybottombar.fragment.LoginFragment;
 import com.android.gybottombar.fragment.MyFragment;
 import com.android.gybottombar.utils.UserManager;
@@ -28,8 +27,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     public void onSelected(int position) {
         mPosition = position;
         if (position == 2) {
-            //gyBottomBarView.hideBadge(position);
-            gyBottomBarView.hideBubblePosition(position);
+            gyBottomBarView.hideBadge(position);
         }
         Toast.makeText(this, "点击了" + position, Toast.LENGTH_SHORT).show();
     }
@@ -68,8 +66,7 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //gyBottomBarView.setBadge(0, 2);
-                gyBottomBarView.setBubbleWithPosition(0, 2);
+                gyBottomBarView.setBadge(0, 2);
             }
         }, 2000);
     }
@@ -102,14 +99,11 @@ public class MainActivity extends GYBottomActivity implements GYBottomBarView.IG
     @Override
     protected void initPositionBadge() {
         super.initPositionBadge();
-        bottomView.setBubbleWithPosition(0, 6);
-        bottomView.setBubbleWithPosition(2, 8);
-        bottomView.setBubbleWithPosition(3, 100);
-        bottomView.setBubbleWithPosition(1, -1);
-        /*bottomView.setBadgeWithBg(0, 6, "#FF0000");
+        bottomView.setBadge(0,100);
+        //bottomView.setBadgeWithBg(0, 6, "#FF0000");
         bottomView.setBadgeWithBg(2, 8, "#FF0000");
         bottomView.setBadgeWithBg(3, 100, "#FF0000");
-        bottomView.setBadgeWithBg(1, -1, "#FF0000");*/
+        bottomView.setBadgeWithBg(1, -1, "#FF0000");
     }
 
     public void goLogin() {

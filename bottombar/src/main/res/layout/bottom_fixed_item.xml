@@ -3,44 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="56dp"
-    android:orientation="vertical"
     android:layout_gravity="center"
     android:gravity="center"
+    android:orientation="vertical"
     android:paddingTop="3dp">
 
-    <RelativeLayout
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/more"
+        tools:ignore="ContentDescription" />
 
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/more" />
-
-        <TextView
-            android:id="@+id/tv_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="-9dp"
-            android:layout_toEndOf="@+id/iv_icon"
-            android:background="@drawable/msg_notice"
-            android:paddingStart="6dp"
-            android:paddingTop="1dp"
-            android:paddingEnd="6dp"
-            android:paddingBottom="1dp"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:visibility="gone" />
-    </RelativeLayout>
-
-    <pl.droidsonroids.gif.GifTextView
+    <TextView
         android:id="@+id/tv_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
+        android:gravity="center"
         android:textSize="12sp"
         tools:text="首页" />
 </LinearLayout>

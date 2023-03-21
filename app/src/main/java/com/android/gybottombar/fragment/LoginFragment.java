@@ -1,17 +1,17 @@
 package com.android.gybottombar.fragment;
 
-import androidx.lifecycle.ViewModelProviders;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 
 import com.android.gybottombar.MainActivity;
 import com.android.gybottombar.R;
@@ -19,8 +19,6 @@ import com.android.gybottombar.R;
 import java.util.Objects;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
-
-    private LoginViewModel mViewModel;
     private TextView btn_login;
     private ImageView iv_close;
 
@@ -45,13 +43,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
