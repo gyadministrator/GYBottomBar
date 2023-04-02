@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:fixed="true"
+        android:background="#FFFFFF"
         app:isPageRepeatLoading="false"
         app:normalTextColor="#CCCCCC"
         app:selectTextColor="#FF0000" />

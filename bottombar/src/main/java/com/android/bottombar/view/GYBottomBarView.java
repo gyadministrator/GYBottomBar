@@ -153,7 +153,6 @@ public class GYBottomBarView extends LinearLayout implements View.OnClickListene
 
             final LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
             this.addView(viewItem, i, params);
-            this.setBackgroundResource(R.color.bottomColor);
             this.setPadding(6, 6, 6, 6);
             viewItem.setTag(i);
             viewItem.setOnClickListener(this);
